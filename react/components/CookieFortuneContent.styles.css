@@ -1,0 +1,68 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+  border: 1px solid gray;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead tr {
+  background-color: #f2f2f2;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+
+  button {
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    display: flex;
+  }
+
+  button:hover {
+    background-color: rgb(210, 61, 61);
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.CookieFortuneContent__mainContainer {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding-top: 2rem;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min-content;
+
+  button {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: linear-gradient(to right, #f6d365, #fda085);
+  }
+}
