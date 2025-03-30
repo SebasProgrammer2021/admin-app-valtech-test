@@ -9,14 +9,14 @@ import { createCookieFortune } from '../api/createCookieFortune'
 import { deleteCookieFortune } from '../api/deleteCookieFortune'
 
 const CookieFortuneContent = () => {
-  const [fortunes, setFortunes] = useState<ICookieFortuneResponse | null>(null)
+  const [fortunes, setFortunes] = useState<ICookieFortuneResponse[]>([])
   const [error, setError] = useState<string | null>(null)
   const [cookieFortune, setCookieFortune] = useState('')
   const [message, setMessage] = useState<string | null>(null)
 
   const updateTable = async () => {
     try {
-      const response = await getAllCookiesFortune()
+      const response: ICookieFortuneResponse[] = await getAllCookiesFortune()
 
       setFortunes(response)
     } catch (err) {
@@ -34,10 +34,11 @@ const CookieFortuneContent = () => {
       await createCookieFortune(cookieFortune)
       setMessage('Galleta de la fortuna creada exitosamente')
       setCookieFortune('')
-      updateTable()
-      setMessage('')
+      await updateTable()
+      setTimeout(() => setMessage(null), 3000)
     } catch (err) {
       setError('Error al crear la galleta de la fortuna')
+      setTimeout(() => setError(null), 3000)
     }
   }
 
@@ -45,10 +46,11 @@ const CookieFortuneContent = () => {
     try {
       await deleteCookieFortune(cookieFortuneId)
       setMessage('Galleta de la fortuna eliminada exitosamente')
-      setMessage('')
-      updateTable()
+      await updateTable()
+      setTimeout(() => setMessage(null), 3000)
     } catch (err) {
       setError('Error al eliminar la galleta de la fortuna')
+      setTimeout(() => setError(null), 3000)
     }
   }
 
@@ -73,7 +75,7 @@ const CookieFortuneContent = () => {
         {error && <p>{error}</p>}
       </div>
 
-      {fortunes ? (
+      {fortunes.length > 0 ? (
         <table>
           <thead>
             <tr>
@@ -82,22 +84,21 @@ const CookieFortuneContent = () => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(fortunes) &&
-              fortunes.map((fortune: ICookieFortuneResponse) => (
-                <tr key={fortune.id}>
-                  <td>{fortune.CookieFortune}</td>
-                  <td>
-                    <button onClick={() => handleDeletePhrase(fortune.id)}>
-                      <img
-                        width="30"
-                        height="30"
-                        src="https://img.icons8.com/ios-glyphs/30/delete.png"
-                        alt="delete"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {fortunes.map((fortune: ICookieFortuneResponse) => (
+              <tr key={fortune.id}>
+                <td>{fortune.CookieFortune}</td>
+                <td>
+                  <button onClick={() => handleDeletePhrase(fortune.id)}>
+                    <img
+                      width="30"
+                      height="30"
+                      src="https://img.icons8.com/ios-glyphs/30/delete.png"
+                      alt="delete"
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       ) : (

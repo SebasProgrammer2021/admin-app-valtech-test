@@ -10,7 +10,9 @@ const { VTEX_API_TOKEN } = process.env
 const API_URL = process.env.API_URL ?? '/api/dataentities'
 
 // Función para obtener una frase aleatoria de la galleta de la fortuna
-export const getAllCookiesFortune = async (): Promise<ICookieFortuneResponse> => {
+export const getAllCookiesFortune = async (): Promise<
+  ICookieFortuneResponse[]
+> => {
   try {
     // Utilizamos axios para hacer la petición a Master Data
     // Acrónimo 'CF' para Cookie Fortune
