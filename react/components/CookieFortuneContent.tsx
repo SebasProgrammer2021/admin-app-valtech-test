@@ -51,8 +51,9 @@ const CookieFortuneContent = () => {
           <input
             type="text"
             name="addPhrase"
-            placeholder="frase de la galleta"
             onChange={(e) => setCookieFortune(e.target.value)}
+            placeholder="frase de la galleta"
+            required
           />
           <button>Añadir registro</button>
           {true && <p>{message}</p>}
