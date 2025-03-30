@@ -27,6 +27,19 @@ th,
 td {
   padding: 12px;
   border-bottom: 1px solid #ddd;
+
+  button {
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    display: flex;
+  }
+
+  button:hover {
+    background-color: rgb(210, 61, 61);
+    border-radius: 5px;
+    cursor: pointer;
+  }
 }
 
 .CookieFortuneContent__mainContainer {

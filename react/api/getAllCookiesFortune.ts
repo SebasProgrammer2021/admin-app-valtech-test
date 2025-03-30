@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export interface ICookieFortuneResponse {
   CookieFortune: string
+  id: string
 }
 
 const { VTEX_API_KEY } = process.env
@@ -15,7 +16,7 @@ export const getAllCookiesFortune = async (): Promise<ICookieFortuneResponse> =>
     // Acrónimo 'CF' para Cookie Fortune
     const response = await axios.get(`${API_URL}/CF/search`, {
       params: {
-        _fields: 'CookieFortune',
+        _fields: 'CookieFortune,id',
       },
       headers: {
         'X-VTEX-API-AppKey': VTEX_API_KEY,

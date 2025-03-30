@@ -6,6 +6,7 @@ import {
 } from '../api/getAllCookiesFortune'
 import styles from './CookieFortuneContent.styles.css'
 import { createCookieFortune } from '../api/createCookieFortune'
+import { deleteCookieFortune } from '../api/deleteCookieFortune'
 
 const CookieFortuneContent = () => {
   const [fortunes, setFortunes] = useState<ICookieFortuneResponse | null>(null)
@@ -18,7 +19,6 @@ const CookieFortuneContent = () => {
       try {
         const response = await getAllCookiesFortune()
 
-        // console.log('Respuesta de getRandomFortune:', response);
         setFortunes(response)
       } catch (err) {
         setError('Error al obtener las frases de la fortuna')
@@ -27,17 +27,24 @@ const CookieFortuneContent = () => {
 
     fetchFortunes()
   }, [])
-  // console.log(fortunes);
 
   const handleCreatePhrase = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // console.log("click handle");
     try {
       await createCookieFortune(cookieFortune)
       setMessage('Galleta de la fortuna creada exitosamente')
       setCookieFortune('')
     } catch (err) {
       setMessage('Error al crear la galleta de la fortuna')
+    }
+  }
+
+  const handleDeletePhrase = async (cookieFortuneId: string) => {
+    try {
+      await deleteCookieFortune(cookieFortuneId)
+      setMessage('Galleta de la fortuna eliminada exitosamente')
+    } catch (err) {
+      setMessage('Error al eliminar la galleta de la fortuna')
     }
   }
 
@@ -56,9 +63,9 @@ const CookieFortuneContent = () => {
             required
           />
           <button>Añadir registro</button>
-          {true && <p>{message}</p>}
         </form>
       </div>
+      <div>{message && <p>{message}</p>}</div>
       {fortunes ? (
         <table>
           <thead>
@@ -68,13 +75,21 @@ const CookieFortuneContent = () => {
           </thead>
           <tbody>
             {Array.isArray(fortunes) &&
-              fortunes.map(
-                (fortune: { CookieFortune: string }, index: number) => (
-                  <tr key={index}>
-                    <td>{fortune.CookieFortune}</td>
-                  </tr>
-                )
-              )}
+              fortunes.map((fortune: ICookieFortuneResponse) => (
+                <tr key={fortune.id}>
+                  <td>{fortune.CookieFortune}</td>
+                  <td>
+                    <button onClick={() => handleDeletePhrase(fortune.id)}>
+                      <img
+                        width="30"
+                        height="30"
+                        src="https://img.icons8.com/ios-glyphs/30/delete.png"
+                        alt="delete"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       ) : (
