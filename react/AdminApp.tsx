@@ -1,16 +1,9 @@
 import React from 'react'
 
-const AdminApp: React.FC = () => {
-  const handleClick = () => {
-    alert('¡Hola desde la Admin App!')
-  }
+import CookieFortuneContent from './components/CookieFortuneContent'
 
-  return (
-    <div>
-      <h2>Bienvenido a la Admin App</h2>
-      <button onClick={handleClick}>Presióname</button>
-    </div>
-  )
+const AdminApp: React.FC = () => {
+  return <CookieFortuneContent />
 }
 
 export default AdminApp
