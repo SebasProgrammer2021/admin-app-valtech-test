@@ -58,4 +58,11 @@ form {
   flex-direction: column;
   gap: 10px;
   width: min-content;
+
+  button {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: linear-gradient(to right, #f6d365, #fda085);
+  }
 }

@@ -35,8 +35,9 @@ const CookieFortuneContent = () => {
       setMessage('Galleta de la fortuna creada exitosamente')
       setCookieFortune('')
       updateTable()
+      setMessage('')
     } catch (err) {
-      setMessage('Error al crear la galleta de la fortuna')
+      setError('Error al crear la galleta de la fortuna')
     }
   }
 
@@ -44,13 +45,12 @@ const CookieFortuneContent = () => {
     try {
       await deleteCookieFortune(cookieFortuneId)
       setMessage('Galleta de la fortuna eliminada exitosamente')
+      setMessage('')
       updateTable()
     } catch (err) {
-      setMessage('Error al eliminar la galleta de la fortuna')
+      setError('Error al eliminar la galleta de la fortuna')
     }
   }
-
-  if (error) return <p>Error: {error}</p>
 
   return (
     <div className={styles.CookieFortuneContent__mainContainer}>
@@ -60,19 +60,25 @@ const CookieFortuneContent = () => {
           <input
             type="text"
             name="addPhrase"
+            value={cookieFortune}
             onChange={(e) => setCookieFortune(e.target.value)}
             placeholder="frase de la galleta"
             required
           />
-          <button>Añadir registro</button>
+          <button type="submit">Añadir registro</button>
         </form>
       </div>
-      <div>{message && <p>{message}</p>}</div>
+      <div>
+        {message && <p>{message}</p>}
+        {error && <p>{error}</p>}
+      </div>
+
       {fortunes ? (
         <table>
           <thead>
             <tr>
               <th>Frase</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
