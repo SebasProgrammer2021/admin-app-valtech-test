@@ -5,10 +5,13 @@ import {
   ICookieFortuneResponse,
 } from '../api/getAllCookiesFortune'
 import styles from './CookieFortuneContent.styles.css'
+import { createCookieFortune } from '../api/createCookieFortune'
 
 const CookieFortuneContent = () => {
   const [fortunes, setFortunes] = useState<ICookieFortuneResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [cookieFortune, setCookieFortune] = useState('')
+  const [message, setMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchFortunes = async () => {
@@ -26,9 +29,16 @@ const CookieFortuneContent = () => {
   }, [])
   // console.log(fortunes);
 
-  const handleCreatePhrase = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreatePhrase = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // console.log("click handle");
+    try {
+      await createCookieFortune(cookieFortune)
+      setMessage('Galleta de la fortuna creada exitosamente')
+      setCookieFortune('')
+    } catch (err) {
+      setMessage('Error al crear la galleta de la fortuna')
+    }
   }
 
   if (error) return <p>Error: {error}</p>
@@ -42,8 +52,10 @@ const CookieFortuneContent = () => {
             type="text"
             name="addPhrase"
             placeholder="frase de la galleta"
+            onChange={(e) => setCookieFortune(e.target.value)}
           />
           <button>Añadir registro</button>
+          {true && <p>{message}</p>}
         </form>
       </div>
       {fortunes ? (
