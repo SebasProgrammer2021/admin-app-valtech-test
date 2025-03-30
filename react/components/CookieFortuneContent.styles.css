@@ -34,3 +34,14 @@ td {
   max-width: 1000px;
   padding-top: 2rem;
 }
+
+.formContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
