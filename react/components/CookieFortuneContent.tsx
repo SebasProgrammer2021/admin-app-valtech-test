@@ -14,18 +14,18 @@ const CookieFortuneContent = () => {
   const [cookieFortune, setCookieFortune] = useState('')
   const [message, setMessage] = useState<string | null>(null)
 
-  useEffect(() => {
-    const fetchFortunes = async () => {
-      try {
-        const response = await getAllCookiesFortune()
+  const updateTable = async () => {
+    try {
+      const response = await getAllCookiesFortune()
 
-        setFortunes(response)
-      } catch (err) {
-        setError('Error al obtener las frases de la fortuna')
-      }
+      setFortunes(response)
+    } catch (err) {
+      setError('Error al obtener las frases de la fortuna')
     }
+  }
 
-    fetchFortunes()
+  useEffect(() => {
+    updateTable()
   }, [])
 
   const handleCreatePhrase = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,6 +34,7 @@ const CookieFortuneContent = () => {
       await createCookieFortune(cookieFortune)
       setMessage('Galleta de la fortuna creada exitosamente')
       setCookieFortune('')
+      updateTable()
     } catch (err) {
       setMessage('Error al crear la galleta de la fortuna')
     }
@@ -43,6 +44,7 @@ const CookieFortuneContent = () => {
     try {
       await deleteCookieFortune(cookieFortuneId)
       setMessage('Galleta de la fortuna eliminada exitosamente')
+      updateTable()
     } catch (err) {
       setMessage('Error al eliminar la galleta de la fortuna')
     }
