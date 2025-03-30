@@ -35,8 +35,9 @@ const CookieFortuneContent = () => {
       setMessage('Galleta de la fortuna creada exitosamente')
       setCookieFortune('')
       setTimeout(() => setMessage(null), 2000)
-      await updateTable()
-      // setTimeout(async () => { await updateTable() }, 3000);
+      setTimeout(async () => {
+        await updateTable()
+      }, 2000)
     } catch (err) {
       setError('Error al crear la galleta de la fortuna')
       setTimeout(() => setError(null), 3000)
